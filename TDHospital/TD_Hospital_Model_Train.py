@@ -4,7 +4,7 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
-from tensorflow.keras import layers
+from keras import layers
 
 
 def data_preprocessing(df):
@@ -76,7 +76,7 @@ def train_model(X, y):
 
 
 if __name__ == "__main__":
-    data_path = './TD_HOSPITAL_TRAIN.csv'
+    data_path = 'TD_HOSPITAL_TRAIN.csv'
     df = pd.read_csv(data_path)
     cleaned_data = data_preprocessing(df)
     y, X = split_feature_label(cleaned_data)
