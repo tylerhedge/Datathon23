@@ -1,0 +1,13 @@
+import pandas as pd
+import numpy as np
+
+#creates dataframe object
+df = pd.read_csv('TDHospital/TD_HOSPITAL_TRAIN.csv')
+
+#drop columns from dataset
+to_drop = ["timeknown"
+]
+
+df.drop(to_drop, inplace=True, axis=1)
+
+print(df.head())
