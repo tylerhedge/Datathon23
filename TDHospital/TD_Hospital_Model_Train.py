@@ -9,7 +9,7 @@ from keras import layers
 
 def data_preprocessing(df):
     
-    col_to_keep = ['death', 'age', 'blood', 'reflex', 'bloodchem1', 'bloodchem2', 'psych1', 'glucose']
+    col_to_keep = ['death', 'meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'glucose', 'psych2', 'bp', 'bloodchem3', 'confidence', 'bloodchem4', 'comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'bloodchem5', 'pain', 'urine', 'bloodchem6', 'education', 'psych5', 'psych6', 'information']
     df = df[col_to_keep]
 
     df.replace('', 0, inplace=True)
@@ -76,7 +76,7 @@ def train_model(X, y):
 
 
 if __name__ == "__main__":
-    data_path = 'TD_HOSPITAL_TRAIN.csv'
+    data_path = 'TDHospital/TD_HOSPITAL_TRAIN.csv'
     df = pd.read_csv(data_path)
     cleaned_data = data_preprocessing(df)
     y, X = split_feature_label(cleaned_data)

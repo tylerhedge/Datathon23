@@ -1,13 +1,49 @@
 import pandas as pd
 import numpy as np
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from main import standardize
 
 #creates dataframe object
 df = pd.read_csv('TDHospital/TD_HOSPITAL_TRAIN.csv')
 
+#cleaning sex data
+df["sex"]=df['sex'].str[0].str.lower()
+df["sex"]=df['sex'].str.replace('1', 'm')
+
+#cleaning NaN values
+df.replace('', 0, inplace=True)
+df.fillna(0, inplace=True)
+
+#pca-ing
+columns_to_PCA = ['meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'glucose', 'psych2', 'bp', 'bloodchem3', 'confidence', 'bloodchem4', 'comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'bloodchem5', 'pain', 'urine', 'bloodchem6', 'education', 'psych5', 'psych6', 'information']
+pca = PCA(n_components=len(columns_to_PCA))
+pcaDF = df[columns_to_PCA]
+print(pcaDF.head())
+pcaDF = standardize(pcaDF)
+pca.fit(pcaDF)
+print('Explained variance ratios:')
+for i, ratio in enumerate(pca.explained_variance_ratio_):
+    print(f'{columns_to_PCA[i]} | {ratio}')
+    
+plt.bar(columns_to_PCA, pca.explained_variance_ratio_, edgecolor='black', alpha=0.7, color='blue')
+plt.xlabel('principle component')
+plt.ylabel('explained variance ratio')
+plt.title(f"explained variance by principle component")
+plt.show()
+
+#one hot encoding
+to_one_hot_encode = ['sex', 'race']
+df = pd.get_dummies(df, columns=to_one_hot_encode, dtype=int) 
+
+df.head()
+
 #drop columns from dataset
-to_drop = ["timeknown"
-]
-
+to_drop = ['dose',
+           'psych3']
 df.drop(to_drop, inplace=True, axis=1)
+#print(df.head())
 
-print(df.head())
+
+df.to_csv(path_or_buf='clean_data.csv')
