@@ -6,9 +6,10 @@ from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from keras import layers
 
+
 def data_preprocessing(df):
     
-    col_to_keep = ['death', 'age', 'blood', 'reflex', 'bloodchem1', 'bloodchem2', 'psych1', 'glucose']
+    col_to_keep = ['death', 'meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'glucose', 'psych2', 'bp', 'bloodchem3', 'confidence', 'bloodchem4', 'comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'bloodchem5', 'pain', 'urine', 'bloodchem6', 'education', 'psych5', 'psych6', 'information']
     df = df[col_to_keep]
 
     df.replace('', 0, inplace=True)
@@ -58,7 +59,7 @@ def train_model(X, y):
     test_loss, test_accuracy = model.evaluate(X_test, y_test)
     
     model.save('example.h5')
-   
+    
     print(f'Test accuracy: {test_accuracy}')
 
     # Optionally, you can plot training history to visualize model performance
