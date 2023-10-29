@@ -101,7 +101,7 @@ def train_model(X, y):
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
     # Train the model
-    history = model.fit(X_train, y_train, epochs=20, batch_size=32, validation_data=(X_val, y_val))
+    history = model.fit(X_train, y_train, epochs=60, batch_size=32, validation_data=(X_val, y_val))
 
     # Evaluate the model on the test set
     test_loss, test_accuracy = model.evaluate(X_test, y_test)
@@ -154,12 +154,14 @@ def meta_model(X, y, model, rf_model):
 
     #Train a logistic regression meta-model on the training data
     meta_model = LogisticRegression()
+    print(type(X_combined_train))
     meta_model.fit(X_combined_train, y_train)
 
     #Step 3: Make predictions using the meta-model
     meta_predictions = meta_model.predict(X_combined_test)
 
     meta_accuracy = accuracy_score(y_test, meta_predictions)
+    joblib.dump(meta_model, "./meta_model.joblib")
     print("Meta-Model Accuracy:", meta_accuracy)
     
 

@@ -14,7 +14,9 @@ app = Flask(__name__)
 class Solution:
     def __init__(self):
         #Initialize any global variables here
-        self.model = joblib.load("random_forest.joblib")
+        self.model = joblib.load("meta_model.joblib")
+        self.rf = joblib.load("random_forest.joblib")
+        self.nn = tf.keras.models.load_model('example.h5')
 
     def calculate_death_prob(self, timeknown, cost, reflex, sex, blood, bloodchem1, bloodchem2, temperature, race,
                              heart, psych1, glucose, psych2, dose, psych3, bp, bloodchem3, confidence, bloodchem4,
@@ -52,7 +54,13 @@ class Solution:
         df.fillna(0, inplace=True)
         print("ANY NAN", df.isnull().values.any())
         print(df.to_string())
-        prediction = self.model.predict(df.to_numpy())
+        df = df.to_numpy()
+        rfPred = self.rf.predict(df)
+        df = df.astype('float32')
+        nnPred = self.nn.predict(df)
+        data = np.column_stack((nnPred, rfPred))
+
+        prediction = self.model.predict(data)
         print(prediction)
         return float(prediction[0])
 
