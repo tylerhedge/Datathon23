@@ -95,8 +95,8 @@ def train_model(X, y):
     # Define the neural network model
     model = keras.Sequential([
         layers.Input(shape=(X_train.shape[1],)),  # Input layer
-        layers.Dense(128, activation='relu'),     # Hidden layer with 128 neurons and ReLU activation
-        layers.Dense(64, activation='relu'),      # Another hidden layer with 64 neurons and ReLU activation
+        layers.Dense(32, activation='relu'),     # Hidden layer with 128 neurons and ReLU activation
+        layers.Dense(16, activation='relu'),      # Another hidden layer with 64 neurons and ReLU activation
         layers.Dense(1, activation='sigmoid')     # Output layer with sigmoid activation for binary classification
     ])
 
