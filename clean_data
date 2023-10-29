@@ -4,9 +4,12 @@ from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 from main import standardize
+from sklearn.linear_model import LinearRegression
 
 #creates dataframe object
 df = pd.read_csv('TDHospital/TD_HOSPITAL_TRAIN.csv')
+
+
 
 #cleaning sex data
 df["sex"]=df['sex'].str[0].str.lower()
@@ -15,6 +18,23 @@ df["sex"]=df['sex'].str.replace('1', 'm')
 #cleaning NaN values
 df.replace('', 0, inplace=True)
 df.fillna(0, inplace=True)
+
+#r^2s
+to_drop = ['dose'
+            ]
+#df.drop(to_drop, inplace=True, axis=1)
+
+to_one_hot_encode = ['sex', 'race', 'diabetes', 'cancer', 'extraprimary', 'primary', 'disability', 'dnr', 'income']
+df = pd.get_dummies(df, columns=to_one_hot_encode, dtype=int) 
+model = LinearRegression()
+l = [[]]
+for column in df.columns:
+    X, y = df[[column]], df['death']
+    model.fit(X, y)
+    l.append([model.score(X, y), column])
+pd.DataFrame(sorted(l)).to_csv("r^2")
+
+
 
 #pca-ing
 columns_to_PCA = ['meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'glucose', 'psych2', 'bp', 'bloodchem3', 'confidence', 'bloodchem4', 'comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'bloodchem5', 'pain', 'urine', 'bloodchem6', 'education', 'psych5', 'psych6', 'information']
@@ -34,15 +54,10 @@ plt.title(f"explained variance by principle component")
 plt.show()
 
 #one hot encoding
-to_one_hot_encode = ['sex', 'race']
-df = pd.get_dummies(df, columns=to_one_hot_encode, dtype=int) 
 
-df.head()
 
 #drop columns from dataset
-to_drop = ['dose',
-           'psych3']
-df.drop(to_drop, inplace=True, axis=1)
+
 #print(df.head())
 
 

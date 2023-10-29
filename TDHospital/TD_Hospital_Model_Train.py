@@ -9,7 +9,7 @@ from keras import layers
 
 def data_preprocessing(df):
     
-    col_to_keep = ['death', 'meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'glucose', 'psych2', 'bp', 'bloodchem3', 'confidence', 'bloodchem4', 'comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'bloodchem5', 'pain', 'urine', 'bloodchem6', 'education', 'psych5', 'psych6', 'information', 'sex_f', 'sex_m']
+    col_to_keep = ['death', 'timeknown', 'cancer_no', 'cancer_metastatic', 'extraprimary_Cancer', 'primary_Lung Cancer', 'primary_ARF/MOSF w/Sepsis', 'psych6', 'primary_MOSF w/Malig', 'psych5', 'disability_<2 mo. follow-up', 'dnr_no dnr', 'dnr_dnr after sadm', 'disability_no(M2 and SIP pres)', 'information', 'glucose', 'urine']
     df = df[col_to_keep]
 
     df.replace('', 0, inplace=True)
