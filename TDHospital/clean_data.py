@@ -18,7 +18,7 @@ def create_df (df,training):
     df["sex"]=df['sex'].str.replace('1', 'm')
 
     #impution
-    columns_to_inputate = ['cost','glucose','bloodchem1','psych2','bloodchem3','sleep','bloodchem4'] #imputation columns here
+    columns_to_inputate = ['cost','bloodchem1'] #imputation columns here
     for col in columns_to_inputate:
         df[col].fillna(df[col].mean(), inplace=True)
 
@@ -63,9 +63,22 @@ def create_df (df,training):
     #one hot encoding
     to_one_hot_encode = ['sex', 'race','dnr']
     #df = pd.get_dummies(df, columns=to_one_hot_encode, dtype=int) 
+    
     df['sex_f'] = (df['sex'] == 'f').astype(int)
     df['sex_m'] = (df['sex'] == 'm').astype(int)
     df = df.drop(columns=["sex"])
+
+    df['cancer_m'] = (df['cancer'] == 'metastatic').astype(int)
+    df['cancer_y'] = (df['cancer'] == 'yes').astype(int)
+    df = df.drop(columns=['cancer'])
+
+    # df['dnr_after'] = (df['dnr'] == 'dnr after sadm').astype(int)
+    # df['dnr_before'] = (df['dnr'] == 'dnr before sadm').astype(int)
+    # df['no_dnr'] = (df['dnr'] == 'no dnr').astype(int)
+
+    # df = df.drop(columns=["dnr"])
+
+
 
     print(df.head())
 

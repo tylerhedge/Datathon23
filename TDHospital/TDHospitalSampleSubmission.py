@@ -30,12 +30,9 @@ class Solution:
 
     
         death=0
-        labels = ['death', 'meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'glucose', 'psych2', 'bp', 'bloodchem3', 'confidence', 'bloodchem4', 'comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'bloodchem5', 'pain', 'urine', 'bloodchem6', 'education', 'psych5', 'psych6', 'information', 'sex']
+        labels = ['death', 'meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'diabetes', 'sex', 'cancer']
         values = [death, meals, temperature, blood, timeknown, cost, reflex, bloodchem1, bloodchem2,
-                             heart, psych1, glucose, psych2, bp, bloodchem3, confidence, bloodchem4,
-                             comorbidity, totalcost, breathing, age, sleep, bloodchem5, pain,
-                             urine, 
-                             bloodchem6, education, psych5, psych6, information, sex]
+                             heart, psych1,diabetes, sex, cancer]
         df = dict()
        
         for label, value in zip(labels, values):

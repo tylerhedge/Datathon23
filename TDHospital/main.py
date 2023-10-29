@@ -36,28 +36,31 @@ def data_preprocessing(df):
                    'bloodchem2', 
                    'heart', 
                    'psych1', 
-                   'glucose', 
-                   'psych2', 
-                   'bp', 
-                   'bloodchem3', 
-                   'confidence', 
-                   'bloodchem4', 
-                   'comorbidity', 
-                   'totalcost', 
-                   'breathing', 
-                   'age', 
-                   'sleep', 
-                   'bloodchem5', 
-                   'pain', 
-                   'urine', 
-                   'bloodchem6', 
-                   'education', 
-                   'psych5', 
-                   'psych6', 
-                   'information',
-                   #'dnr_dnr after sadm','dnr_dnr before sadm','dnr_no dnr',
+                #    'glucose', 
+                #    'psych2', 
+                #    'bp', 
+                #    'bloodchem3', 
+                #    'confidence', 
+                #    'bloodchem4', 
+                #    'comorbidity', 
+                #    'totalcost', 
+                #    'breathing', 
+                #    'age', 
+                #    'sleep', 
+                #    'bloodchem5', 
+                #    'pain', 
+                #    'urine', 
+                #    'bloodchem6', 
+                #    'education', 
+                #    'psych5', 
+                #    'psych6', 
+                #    'information',
+                   'diabetes',
                   # 'race_asian', 'race_black', 'race_hispanic', 'race_other', 'race_white'
-                  'sex_f', 'sex_m']
+                  'sex_f', 'sex_m',
+                  #'dnr_after','dnr_before','no_dnr'
+                  'cancer_m', 'cancer_y'
+                  ]
     df = df[col_to_keep]
 
     df.replace('', 0, inplace=True)
@@ -101,7 +104,7 @@ def train_model(X, y):
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
     # Train the model
-    history = model.fit(X_train, y_train, epochs=60, batch_size=32, validation_data=(X_val, y_val))
+    history = model.fit(X_train, y_train, epochs=20, batch_size=32, validation_data=(X_val, y_val))
 
     # Evaluate the model on the test set
     test_loss, test_accuracy = model.evaluate(X_test, y_test)
