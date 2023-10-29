@@ -13,11 +13,33 @@ df["sex"]=df['sex'].str[0].str.lower()
 df["sex"]=df['sex'].str.replace('1', 'm')
 
 #cleaning NaN values
+#df["cost"] = df["cost"].interpolate(method='linear', limit_direction='forward', axis=0) #linear interpolation of cost
 df.replace('', 0, inplace=True)
 df.fillna(0, inplace=True)
 
+#remove outliers
+def handle_outliers(df, columns):
+    for column in columns:
+        q75, q25 = np.percentile(df[column], [75, 25])
+        intr_qr = q75 - q25
+        upper_bound = q75 + (1.5 * intr_qr)
+        lower_bound = q25 - (1.5 * intr_qr)
+
+        # Replace values less than the lower bound or greater than the upper bound with NaN
+        df.loc[(df[column] < lower_bound) | (df[column] > upper_bound), column] = np.nan
+
+    # Drop rows with NaN values in any of the specified columns
+    df.dropna(subset=columns, inplace=True)
+
+# List of columns for which you want to handle outliers
+columns_to_handle = ['cost', 'meals']
+
+# Call the function to handle outliers for the specified columns
+handle_outliers(df, columns_to_handle)
+    
+
 #pca-ing
-columns_to_PCA = ['meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'glucose', 'psych2', 'bp', 'bloodchem3', 'confidence', 'bloodchem4', 'comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'bloodchem5', 'pain', 'urine', 'bloodchem6', 'education', 'psych5', 'psych6', 'information']
+columns_to_PCA = ['meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'glucose', 'psych2', 'psych3', 'bp', 'bloodchem3', 'confidence', 'bloodchem4', 'comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'bloodchem5', 'pain', 'urine', 'bloodchem6', 'education', 'psych5', 'psych6', 'information']
 pca = PCA(n_components=len(columns_to_PCA))
 pcaDF = df[columns_to_PCA]
 print(pcaDF.head())
@@ -34,14 +56,13 @@ plt.title(f"explained variance by principle component")
 plt.show()
 
 #one hot encoding
-to_one_hot_encode = ['sex', 'race']
+to_one_hot_encode = ['sex', 'race','dnr']
 df = pd.get_dummies(df, columns=to_one_hot_encode, dtype=int) 
-
-df.head()
 
 #drop columns from dataset
 to_drop = ['dose',
-           'psych3']
+           'dnr_0',
+           'race_0']
 df.drop(to_drop, inplace=True, axis=1)
 #print(df.head())
 
