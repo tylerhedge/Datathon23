@@ -104,7 +104,7 @@ def train_model(X, y):
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
     # Train the model
-    history = model.fit(X_train, y_train, epochs=20, batch_size=32, validation_data=(X_val, y_val))
+    history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_val, y_val))
 
     # Evaluate the model on the test set
     test_loss, test_accuracy = model.evaluate(X_test, y_test)

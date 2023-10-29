@@ -18,7 +18,7 @@ def create_df (df,training):
     df["sex"]=df['sex'].str.replace('1', 'm')
 
     #impution
-    columns_to_inputate = ['cost','bloodchem1'] #imputation columns here
+    columns_to_inputate = ['meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart'] #imputation columns here
     for col in columns_to_inputate:
         df[col].fillna(df[col].mean(), inplace=True)
 
@@ -39,7 +39,7 @@ def create_df (df,training):
         if training:
             df.dropna(subset=columns, inplace=True) #drop rows with Nan
 
-    columns_to_handle = ['cost', 'meals'] #remove outliers here
+    columns_to_handle = ['meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart'] #remove outliers here
     #handle_outliers(df, columns_to_handle, training)
         
 
