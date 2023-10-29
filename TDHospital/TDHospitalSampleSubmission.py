@@ -28,7 +28,7 @@ class Solution:
 
     
         death=0
-        labels = ['timeknown', 'cost', 'reflex', 'sex', 'blood', 'bloodchem1', 'bloodchem2', 'temperature', 'race','heart', 'psych1', 'glucose', 'psych2', 'dose', 'psych3', 'bp', 'bloodchem3', 'confidence', 'bloodchem4','comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'dnr', 'bloodchem5', 'pdeath', 'meals', 'pain','primary', 'psych4', 'disability', 'administratorcost', 'urine', 'diabetes', 'income', 'extraprimary','bloodchem6', 'education', 'psych5', 'psych6', 'information', 'cancer','death']
+        labels = ['death', 'meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'glucose', 'psych2', 'bp', 'bloodchem3', 'confidence', 'bloodchem4', 'comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'bloodchem5', 'pain', 'urine', 'bloodchem6', 'education', 'psych5', 'psych6', 'information', 'sex']
         values = [death, meals, temperature, blood, timeknown, cost, reflex, bloodchem1, bloodchem2,
                              heart, psych1, glucose, psych2, bp, bloodchem3, confidence, bloodchem4,
                              comorbidity, totalcost, breathing, age, sleep, bloodchem5, pain,
@@ -46,9 +46,15 @@ class Solution:
         df = create_df(df, False)
         cleaned_data = data_preprocessing(df)
 
-        print(df)
+        df = df.drop(columns=['death'])
+        df.replace('', 0, inplace=True)
+        df.replace('nan', 0, inplace=True)
+        df.fillna(0, inplace=True)
+        print("ANY NAN", df.isnull().values.any())
+        print(df.to_string())
         prediction = self.model.predict(df.to_numpy())
-        return float(prediction[0][0])
+        print(prediction)
+        return float(prediction[0])
 
 
 # BOILERPLATE

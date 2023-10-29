@@ -13,7 +13,7 @@ def standardize(X):
 def create_df (df,training):
 
     #cleaning sex data
-    print("aaaaaa", df['sex'])
+    df.head()
     df["sex"]=df['sex'].str[0].str.lower()
     df["sex"]=df['sex'].str.replace('1', 'm')
 
@@ -29,6 +29,7 @@ def create_df (df,training):
     #remove outliers
     def handle_outliers(df, columns, training):
         for column in columns:
+            print(f'column: {column}')
             q75, q25 = np.percentile(df[column], [75, 25])
             intr_qr = q75 - q25
             upper_bound = q75 + (1.5 * intr_qr)
@@ -39,7 +40,7 @@ def create_df (df,training):
             df.dropna(subset=columns, inplace=True) #drop rows with Nan
 
     columns_to_handle = ['cost', 'meals'] #remove outliers here
-    handle_outliers(df, columns_to_handle, training)
+    #handle_outliers(df, columns_to_handle, training)
         
 
     # #pca-ing
@@ -64,7 +65,7 @@ def create_df (df,training):
     #df = pd.get_dummies(df, columns=to_one_hot_encode, dtype=int) 
     df['sex_f'] = (df['sex'] == 'f').astype(int)
     df['sex_m'] = (df['sex'] == 'm').astype(int)
-    df = df.drop(columns=["sex","race","dnr","cancer","extraprimary","disability", 'income', 'primary'])
+    df = df.drop(columns=["sex"])
 
     print(df.head())
 
