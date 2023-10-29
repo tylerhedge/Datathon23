@@ -11,7 +11,6 @@ def data_preprocessing(df):
     
     col_to_keep = ['death', 'meals', 'temperature', 'blood', 'timeknown', 'cost', 'reflex', 'bloodchem1', 'bloodchem2', 'heart', 'psych1', 'glucose', 'psych2', 'bp', 'bloodchem3', 'confidence', 'bloodchem4', 'comorbidity', 'totalcost', 'breathing', 'age', 'sleep', 'bloodchem5', 'pain', 'urine', 'bloodchem6', 'education', 'psych5', 'psych6', 'information', 'sex_f', 'sex_m']
     df = df[col_to_keep]
-
     df.replace('', 0, inplace=True)
     df.fillna(0, inplace=True)
     return df
@@ -32,8 +31,8 @@ def split_feature_label(df):
 
 def standardize(X):
     scaler = StandardScaler()
-    X_numeric = scaler.fit_transform(X.select_dtypes(include=['float64']))
-    X[X.select_dtypes(include=['float64']).columns] = X_numeric
+    X_numeric = scaler.fit_transform(X.select_dtypes(include=['float32']))
+    X[X.select_dtypes(include=['float32']).columns] = X_numeric
     return X
 
 def train_model(X, y):

@@ -1,0 +1,4 @@
+from TDHospitalSampleSubmission import Solution
+sol = Solution()
+ans = sol.calculate_death_prob(timeknown=1642.0, cost=16760.0312, reflex=9.114985193, sex='female', blood=12.0, bloodchem1=3.7998047, bloodchem2=1.69995117, temperature=36.89844, race='white', heart=80.0, psych1=0.0, glucose=107.0, psych2=0.0, dose=5, psych3=0.0, bp=72.0, bloodchem3=0, confidence=9.432315509, bloodchem4=0, comorbidity=2.0, totalcost=45993.3438, breathing=14.0, age=161.9259023, sleep=0, dnr='no dnr', bloodchem5=0, pdeath=0, meals=136.0, pain=1.0, primary='ARF/MOSF w/Sepsis', psych4=6.0, disability='<2 mo. follow-up', administratorcost=58267.438, urine=0, diabetes=1.0, income='under $11k', extraprimary='ARF/MOSF', bloodchem6=0, education=14.0, psych5=29.5, psych6=6.0, information=6.0, cancer='no')
+print(ans)
